@@ -1,0 +1,24 @@
+﻿<Window x:Class="WPF_BOXING_01.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_BOXING_01"
+        mc:Ignorable="d"
+        Title="Registration" Height="450" Width="800" Background="#54c">
+    <Border Background="#2e3137" CornerRadius="20" Margin="20">
+        <StackPanel Margin="20">
+            <Label Content="Register" Foreground="White" FontSize="25" HorizontalAlignment="Center" />
+            <Separator></Separator>
+            <Label Content="Username" Foreground="White"/>
+            <TextBox Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18" Text="{Binding UserName}"/>
+            <Label Content="Password" Foreground="White"/>
+            <TextBox Name="txtPassword" Background="#545d6a" Foreground="White" FontSize="18" Text="{Binding UserPassword}"/>
+            <Label Content="Confirm Password" Foreground="White"/>
+            <TextBox Name="txtConfirmPassword" Background="#545d6a" Foreground="White" FontSize="18" Text="{Binding UserConfirmPassword}"/>
+            <Label Content="Email" Foreground="White"/>
+            <TextBox Name="txtEmail" Background="#545d6a" Foreground="White" FontSize="18" Text="{Binding UserEmail}"/>
+            <Button Name="btnRegister" Click="btnRegister_Click" Content="Register" Margin="60 40" Background="#545d6a" Foreground="White" FontSize="18"/>
+        </StackPanel>
+    </Border>
+</Window>
