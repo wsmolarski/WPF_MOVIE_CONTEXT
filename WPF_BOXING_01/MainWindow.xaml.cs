@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static WPF_BOXING_01.MoviesContext;
 
 namespace WPF_BOXING_01
 {
@@ -23,6 +24,10 @@ namespace WPF_BOXING_01
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void btnReserve_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

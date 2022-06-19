@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_BOXING_01"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" FontSize="14" Background="#54c">
+    <Border Background="#2e3137" CornerRadius="20" Margin="20">
+        <Button Name="btnReserve" Click="btnReserve_Click" Content="Reserve" Margin="240,305,240,35" Background="#545d6a" Foreground="White" FontSize="18"/>
+    </Border>
 </Window>
