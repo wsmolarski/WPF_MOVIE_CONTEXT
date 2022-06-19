@@ -64,7 +64,7 @@ namespace WPF_BOXING_01
             }
             else if (userNames.Contains(UserName))
             {
-                MessageBox.Show("User name is taken.");
+                MessageBox.Show("Username is taken.");
             }
             else if (emails.Contains(UserEmail))
             {

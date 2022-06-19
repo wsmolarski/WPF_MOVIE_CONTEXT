@@ -19,7 +19,7 @@ namespace WPF_BOXING_01
 
         public MoviesContext():base(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Program.MoviesContext;Integrated Security=True")
         {
-
+            
         }
 
         public class UserLogin

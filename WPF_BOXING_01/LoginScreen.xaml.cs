@@ -52,8 +52,21 @@ namespace WPF_BOXING_01
                     },
 
                 };
+                var places = new List<Place>
+                {
+                    new Place
+                    {
+                        Cinema = "Cinema City"
+                    },
+                    new Place
+                    {
+                        Cinema = "Multikino"
+                    }
+
+                };
 
                 db.Movies.AddRange(movies);
+                db.Places.AddRange(places);
                 db.SaveChanges();
             }
         }
