@@ -50,6 +50,30 @@ namespace WPF_BOXING_01
                         Genre = "Thriller",
                         Director = "Dariusz"
                     },
+                    new Movie
+                    {
+                        Title = "Joker",
+                        Genre = "Drama",
+                        Director = "Mateusz"
+                    },
+                    new Movie
+                    {
+                        Title = "Leon Zawodowiec",
+                        Genre = "Action",
+                        Director = "Władysław"
+                    },
+                    new Movie
+                    {
+                        Title = "Interstellar",
+                        Genre = "Sci-fi",
+                        Director = "Marek"
+                    },
+                    new Movie
+                    {
+                        Title = "Sonic 2",
+                        Genre = "Adventure",
+                        Director = "Robert"
+                    }
 
                 };
                 var places = new List<Place>
@@ -75,7 +99,7 @@ namespace WPF_BOXING_01
         {
             if (UserName == null || UserPassword == null)
             {
-                MessageBox.Show("NIE MOZE BYC USERNAME ALBO PASSWORD PUSTE");
+                MessageBox.Show("Password i UserName nie moze byc puste");
             }
             else
             {

@@ -33,22 +33,32 @@ namespace WPF_BOXING_01
             InitializeComponent();
             ShowData();
         }
-        private void btnReserve_Click(object sender, RoutedEventArgs e)
-        {
-             
-            MessageBox.Show("Film został zarezerwowany");
-            ShowData();
-        
-    }
-
         
 
         private void ShowData()
         {
-            adpt=new SqlDataAdapter("select * from Movies", con);
+            adpt = new SqlDataAdapter("select Title, Genre, Director from Movies", con);
+            
             dt = new DataTable();
             adpt.Fill(dt);
             dataGridView.ItemsSource = dt.DefaultView;
+        }
+
+        private void btnReserve_Click(object sender, RoutedEventArgs e)
+        {
+            
+            
+                con.Open();
+            adpt = new SqlDataAdapter("update Title, Genre, Director from Movies", con);
+
+            dt = new DataTable();
+            adpt.Update(dt);
+            dataGridView.ItemsSource = dt.DefaultView;
+
+            MessageBox.Show("Film został zarezerwowany");
+            
+           
+
         }
     }
 }

@@ -57,32 +57,32 @@ namespace WPF_BOXING_01
                 var emptyFieldsString = string.Join(" ", emptyFields);
                 if (emptyFields.Count == 1)
                 {
-                    MessageBox.Show(emptyFieldsString + " cannot be empty.");
+                    MessageBox.Show(emptyFieldsString + " nie może być puste.");
                 }
                 else
-                    MessageBox.Show("this fields cannot be empty: " + emptyFieldsString + ".");
+                    MessageBox.Show("Pola nie mogą być puste: " + emptyFieldsString + ".");
             }
             else if (userNames.Contains(UserName))
             {
-                MessageBox.Show("Username is taken.");
+                MessageBox.Show("Nazwa użytkownia jest zajęta.");
             }
             else if (emails.Contains(UserEmail))
             {
-                MessageBox.Show("Email address is taken.");
+                MessageBox.Show("Adres Email jest zajęty.");
             }
             else if (UserPassword != UserConfirmPassword)
             {
-                MessageBox.Show("Passwords are not the same.");
+                MessageBox.Show("Podane hasła nie są takie same.");
             }
             else if (UserPassword.Contains(UserName))
             {
-                MessageBox.Show("Password is too similar to User Name.");
+                MessageBox.Show("Haslo jest zbyt podobne do nazwy użytkownika.");
             }
             else
             {
                 db.UserLogins.Add(new UserLogin { UserName = UserName, Password = UserPassword, Email = UserEmail });
                 db.SaveChanges();
-                MessageBox.Show("Successfully registered.\nYou can login now.");
+                MessageBox.Show("Rejestracja przebiegła pomyślnie.\nMożesz się zalogować.");
                 var _ = new LoginScreen(); // po rejestracji nie zamyka okna tylko przerzuca do login screen
                 _.Show();
                 Close();

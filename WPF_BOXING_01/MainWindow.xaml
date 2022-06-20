@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800" FontSize="14" Background="#54c">
     <Border Background="#2e3137" CornerRadius="20" Margin="20">
         <Grid Margin="34,10,34,60">
-            <Button Name="btnReserve" Click="btnReserve_Click" Content="Reserve" Margin="204,287,194,-46" Background="#545d6a" Foreground="White" FontSize="18"/>
+            <Button Command="{Binding DeleteCommand}" Name="btnReserve" Click="btnReserve_Click" Content="Reserve" Margin="204,287,194,-46" Background="#545d6a" Foreground="White" FontSize="18"/>
 
             <DataGrid x:Name="dataGridView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="30,10,20,117"/>
         </Grid>
