@@ -24,41 +24,123 @@ namespace WPF_BOXING_01
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        SqlConnection con = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Program.MoviesContext;Integrated Security=True");
-        SqlDataAdapter adpt;
-        DataTable dt;
         public MainWindow()
         {
             InitializeComponent();
-            ShowData();
-        }
-        
-
-        private void ShowData()
-        {
-            adpt = new SqlDataAdapter("select Title, Genre, Director from Movies", con);
-            
-            dt = new DataTable();
-            adpt.Fill(dt);
-            dataGridView.ItemsSource = dt.DefaultView;
+            LoadGrid();
         }
 
-        private void btnReserve_Click(object sender, RoutedEventArgs e)
+        SqlConnection con = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Program.MoviesContext;Integrated Security=True");
+        public void clearData()
         {
-            
-            
-                con.Open();
-            adpt = new SqlDataAdapter("update Title, Genre, Director from Movies", con);
+            movie_txt.Clear();
+            genre_txt.Clear();
+            director_txt.Clear();
+            search_txt.Clear();
+        }
 
-            dt = new DataTable();
-            adpt.Update(dt);
-            dataGridView.ItemsSource = dt.DefaultView;
+        public void LoadGrid()
+        {
+            SqlCommand cmd = new SqlCommand("select * from Movies", con);
+            DataTable dt = new DataTable();
+            con.Open();
+            SqlDataReader sdr = cmd.ExecuteReader();
+            dt.Load(sdr);
+            con.Close();
+            datagrid.ItemsSource = dt.DefaultView;
+        }
+        private void ClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            clearData();
+        }
 
-            MessageBox.Show("Film został zarezerwowany");
-            
-           
+        public bool isValid()
+        {
+            if (movie_txt.Text == string.Empty)
+            {
+                MessageBox.Show("Title is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            if (genre_txt.Text == string.Empty)
+            {
+                MessageBox.Show("Genre is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            if (director_txt.Text == string.Empty)
+            {
+                MessageBox.Show("Director is required", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            return true;
+        }
 
+        private void InsertBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (isValid())
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Movies VALUES (@Movie, @Genre, @Director)", con);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@Movie", movie_txt.Text);
+                    cmd.Parameters.AddWithValue("@Genre", genre_txt.Text);
+                    cmd.Parameters.AddWithValue("@Director", director_txt.Text);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    LoadGrid();
+                    MessageBox.Show("Successfully registered", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                    clearData();
+                }
+            }
+            catch(SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("delete from Movies where MovieId = " +search_txt.Text+ " ", con);
+            try
+            {
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Record has been deleted", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+                con.Close();
+                clearData();
+                LoadGrid();
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Not deleted" + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("update Movies set Title = '" + movie_txt.Text + "', Genre = '" + genre_txt.Text + "', Director = '" + director_txt.Text+"' WHERE MovieId = '" + search_txt.Text + "' ", con);
+            try
+            {
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Record has been updated succesfully", "Updated", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+                clearData();
+                LoadGrid();
+            }
         }
     }
 }
