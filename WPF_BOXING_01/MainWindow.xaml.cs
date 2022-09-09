@@ -36,6 +36,7 @@ namespace WPF_BOXING_01
             movie_txt.Clear();
             genre_txt.Clear();
             director_txt.Clear();
+            places_txt.Clear();
             search_txt.Clear();
         }
 
@@ -80,11 +81,12 @@ namespace WPF_BOXING_01
             {
                 if (isValid())
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Movies VALUES (@Movie, @Genre, @Director)", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Movies VALUES (@Movie, @Genre, @Director, @AvailablePlaces)", con);
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@Movie", movie_txt.Text);
                     cmd.Parameters.AddWithValue("@Genre", genre_txt.Text);
                     cmd.Parameters.AddWithValue("@Director", director_txt.Text);
+                    cmd.Parameters.AddWithValue("@AvailablePlaces", places_txt.Text);
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();

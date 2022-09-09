@@ -57,32 +57,33 @@ namespace WPF_BOXING_01
                 var emptyFieldsString = string.Join(" ", emptyFields);
                 if (emptyFields.Count == 1)
                 {
-                    MessageBox.Show(emptyFieldsString + " nie może być puste.");
+                    MessageBox.Show(emptyFieldsString + " cannot be empty");
                 }
                 else
-                    MessageBox.Show("Pola nie mogą być puste: " + emptyFieldsString + ".");
+                    MessageBox.Show("Field cannot be empty: " + emptyFieldsString + ".");
             }
             else if (userNames.Contains(UserName))
             {
-                MessageBox.Show("Nazwa użytkownia jest zajęta.");
+                MessageBox.Show("This username is taken");
             }
             else if (emails.Contains(UserEmail))
             {
-                MessageBox.Show("Adres Email jest zajęty.");
+                MessageBox.Show("This email is taken");
             }
             else if (UserPassword != UserConfirmPassword)
             {
-                MessageBox.Show("Podane hasła nie są takie same.");
+                MessageBox.Show("Passwords are not the same");
             }
             else if (UserPassword.Contains(UserName))
             {
-                MessageBox.Show("Haslo jest zbyt podobne do nazwy użytkownika.");
+                MessageBox.Show("Password is too similar to username");
             }
             else
             {
-                db.UserLogins.Add(new UserLogin { UserName = UserName, Password = UserPassword, Email = UserEmail });
+
+                db.UserLogins.Add(new UserLogin { UserName = UserName, Password = UserPassword, Email = UserEmail, AccountType = "User" });
                 db.SaveChanges();
-                MessageBox.Show("Rejestracja przebiegła pomyślnie.\nMożesz się zalogować.");
+                MessageBox.Show("Registration was succesfull\nYou can login now");
                 var _ = new LoginScreen(); // po rejestracji nie zamyka okna tylko przerzuca do login screen
                 _.Show();
                 Close();

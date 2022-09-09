@@ -25,12 +25,32 @@ namespace WPF_BOXING_01
 
         public LoginScreen()
         {
+            using (var db = new MoviesContext())
+            {
+                var userData = db.UserLogins
+                    .Where(q => q.AccountType == "Administrator")
+                    .ToList();
+                if (userData.Count == 0)
+                {
+                    db.UserLogins.Add(new UserLogin() //tworzy konto administratora
+                    {
+                        UserName = "Admin",
+                        Password = "Admin",
+                        Email = "example@gmail.com",
+                        AccountType = "Administrator"
+                    });
+                    db.SaveChanges();
+                    MessageBox.Show(
+                        "Created Administrator account with\nUserName: Admin\nPassword Admin\nRemember to change User Name and Password!"); 
+                }
+            }
             InitializeComponent();
             DataContext = this;  //zapisuje dane podane przez użytkownika
             using (var db = new MoviesContext())
-            {
-
-                var movies = new List<Movie>
+            { var MoviesData = db.Movies.Select(q => q).ToList();
+                if (MoviesData.Count == 0)
+                {
+                    var movies = new List<Movie>
                 {
                     new Movie
                     {
@@ -76,7 +96,7 @@ namespace WPF_BOXING_01
                     }
 
                 };
-                var places = new List<Place>
+                    var places = new List<Place>
                 {
                     new Place
                     {
@@ -89,9 +109,10 @@ namespace WPF_BOXING_01
 
                 };
 
-                db.Movies.AddRange(movies);
-                db.Places.AddRange(places);
-                db.SaveChanges();
+                    db.Movies.AddRange(movies);
+                    db.Places.AddRange(places);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -99,7 +120,7 @@ namespace WPF_BOXING_01
         {
             if (UserName == null || UserPassword == null)
             {
-                MessageBox.Show("Password i UserName nie moze byc puste");
+                MessageBox.Show("Password and UserName cannot be empty");
             }
             else
             {
@@ -108,16 +129,33 @@ namespace WPF_BOXING_01
             var UserNames = db.UserLogins.Select(q => q.UserName).ToList(); // bierze wszystkie nazwy użytkowników z db
             var UserNameExists = UserNames.Contains(UserName); // bool sprawdza czy podana nazwa użytkownika jest w db
             var CorrectPassword = "";
+                var AccountType = "";
             if (UserNameExists) // zapisuje poprawne hasło do correct passworda
             {
                 CorrectPassword = db.UserLogins.Where(q => q.UserName == UserName).Select(q => q.Password).ToList().FirstOrDefault();
-            }
+                    AccountType = db.UserLogins.Where(q => q.UserName == UserName).Select(q => q.AccountType).ToList().FirstOrDefault();
+                }
             var PasswordCheck = CorrectPassword == UserPassword; // bool sprawdza czy hasło podane przez użytkownika jest przypisane do tego konta
-                if (UserNameExists && PasswordCheck)
+                if (UserNameExists && PasswordCheck && AccountType == "Administrator")
                 {
+
                     var _ = new MainWindow();
                     _.Show();
                     Close(); // tworzy instancje main windowa i pokazuje okno
+                }
+                else
+                if (UserNameExists && PasswordCheck)
+
+                {
+                    var _ = new UserWindow();
+
+                    _.Show();
+                    Close();
+
+                } 
+                else
+                {
+                    MessageBox.Show("There is no account with this username");
                 }
             }
         }
@@ -127,6 +165,6 @@ namespace WPF_BOXING_01
             var _ = new Registration();
             _.Show();
             Close();
-        }
+        } 
     }
 }

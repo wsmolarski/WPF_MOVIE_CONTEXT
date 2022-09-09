@@ -36,6 +36,7 @@ namespace WPF_BOXING_01
             public string LastName { get; set; }
             public int Age { get; set; }
             public int PhoneNumber { get; set; }
+            public string AccountType { get; set; }
 
         }
 
@@ -59,6 +60,7 @@ namespace WPF_BOXING_01
             public string Title { get; set; }
             public string Genre { get; set; }
             public string Director { get; set; }
+            public int AvailablePlaces { get; set; } = 20;
 
         }
 
